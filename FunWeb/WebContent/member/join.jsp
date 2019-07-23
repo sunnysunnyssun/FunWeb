@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="../script/jquery-3.4.1.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 function post(){
@@ -106,6 +107,26 @@ function pass2(){
 
 }
 
+$(document).ready(function(){
+	$('.dup').click(function(){
+	    
+	    if($('#id').val()==""){
+	        alert("아이디를 입력하세요");
+	        $('#id').focus();
+	        return;     
+	    }
+	    $.ajax('idcheck2.jsp',{
+	        data:{id:$('#id').val()},
+	        success : function(data){
+	            console.log(data);
+	            $('#idCheckText').html(data);
+
+	        }
+	    });
+	});  // 아이디 중복 체크 버튼을 클릭햇을 때.
+
+
+});
 
 </script>
 
@@ -145,8 +166,11 @@ function pass2(){
 <fieldset>
 <legend>기본사항</legend>
 <label>아이디</label>
-<input type="text" name="id" class="id" required="required" placeholder="아이디는 4~7자 ">
-<input type="button" value="아이디중복확인" class="dup" onclick="idcheck()"><br>
+<input type="text" name="id" class="id" id="id" required="required" placeholder="아이디는 4~7자 ">
+<!-- <input type="button" value="아이디중복확인" class="dup" onclick="idcheck()"><br> -->
+
+<input type="button" value="아이디중복확인" class="dup" id="idCheck"><span id="idCheckText"></span><br>
+
 <label>비밀번호</label>
 <input type="password" name="pass" required="required" placeholder="비밀번호 3~8자의 영문자" onkeyup="pass2()"> <span id="passOk"></span><br>
 <label>비밀번호 확인</label>
